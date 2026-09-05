@@ -1,7 +1,12 @@
 "use client";
 
-import { UserButton } from "@clerk/nextjs";
+import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
 
 export default function Home() {
-  return <UserButton />;
+  return (
+    <div className="flex flex-col">
+      <UserButton />
+      <OrganizationSwitcher />
+    </div>
+  );
 }
