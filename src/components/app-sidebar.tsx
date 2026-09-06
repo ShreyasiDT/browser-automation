@@ -1,40 +1,17 @@
-"use client";
-
 import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
-import { PlusIcon, WorkflowIcon } from "lucide-react";
 import * as React from "react";
 
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarGroup,
-  SidebarGroupAction,
-  SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
   SidebarRail,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-
-const workflows = [
-  { id: "dominant-wasp", name: "dominant-wasp" },
-  { id: "honest-reindeer", name: "honest-reindeer" },
-  { id: "expected-llama", name: "expected-llama" },
-  { id: "essential-ocelot", name: "essential-ocelot" },
-  { id: "creepy-echidna", name: "creepy-echidna" },
-  { id: "eastern-silkworm", name: "eastern-silkworm" },
-  { id: "cultural-lion", name: "cultural-lion" },
-  { id: "proud-weasel", name: "proud-weasel" },
-  { id: "regional-bonobo", name: "regional-bonobo" },
-];
+import { WorkflowNav } from "../../features/workflows/components/workflow-nav";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const [activeWorkflow, setActiveWorkflow] = React.useState(workflows[0].id);
-
   return (
     <Sidebar variant="inset" collapsible="icon" {...props}>
       <SidebarHeader className="flex-row items-center justify-between gap-2  group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:gap-0">
@@ -51,29 +28,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
 
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Workflows</SidebarGroupLabel>
-          <SidebarGroupAction title="New workflow">
-            <PlusIcon />
-            <span className="sr-only">New workflow</span>
-          </SidebarGroupAction>
-          <SidebarGroupContent>
-            <SidebarMenu className="gap-y-0.5">
-              {workflows.map((workflow) => (
-                <SidebarMenuItem key={workflow.id}>
-                  <SidebarMenuButton
-                    isActive={workflow.id === activeWorkflow}
-                    onClick={() => setActiveWorkflow(workflow.id)}
-                    tooltip={workflow.name}
-                  >
-                    <WorkflowIcon />
-                    <span>{workflow.name}</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        <WorkflowNav />
       </SidebarContent>
 
       <SidebarFooter className="group-data-[collapsible=icon]:items-center">
