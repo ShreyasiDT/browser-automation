@@ -9,6 +9,7 @@ if (!process.env.DATABASE_URL) {
 
 // Pooled connection over HTTP: one-shot queries, no session state. Migrations
 // use DATABASE_URL_UNPOOLED instead (see drizzle.config.ts).
-export const db = drizzle(neon(process.env.DATABASE_URL), { schema });
+const sql = neon(process.env.DATABASE_URL);
+export const db = drizzle({ client: sql, schema, casing: "snake_case" });
 
 export { schema };

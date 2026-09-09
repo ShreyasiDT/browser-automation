@@ -5,8 +5,8 @@ config({ path: ".env.local" });
 
 export default defineConfig({
   dialect: "postgresql",
-  schema: "./src/db/schema.ts",
-  out: "./src/db/migrations",
+  schema: "./src/lib/db/schema.ts",
+  out: "./src/lib/db/migrations",
   dbCredentials: {
     // Direct (non-pooled) connection: PgBouncer's transaction mode breaks
     // migrations, dumps and anything relying on session state.
