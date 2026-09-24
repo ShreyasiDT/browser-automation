@@ -16,6 +16,10 @@ Derive database types from the Drizzle schema — never hand-write custom or par
 
 `react/no-unescaped-entities` (from `eslint-config-next/core-web-vitals`) errors on a raw `'` in JSX text, so `<p>It doesn't work</p>` fails `npm run lint`. In JSX text write the typographic apostrophe `’` directly (`<p>It doesn’t work</p>`) — it is not flagged, needs no entity, and reads correctly. Never reach for `&apos;`/`&#39;`, and don't reword copy to dodge the contraction. Straight `'` stays fine everywhere it isn't JSX text: string literals, attribute values, and expression containers.
 
+# React Flow
+
+Don't rely on training data for React Flow (`@xyflow/react`): its APIs, component props, hooks, types, and usage patterns change between versions. Before writing or changing any code that uses React Flow, fetch https://reactflow.dev/llms.txt, find the pages relevant to the task, and read them. Follow what the docs say, even where it differs from what you remember.
+
 <!-- TRIGGER.DEV SKILLS START -->
 ## Trigger.dev agent skills
 
