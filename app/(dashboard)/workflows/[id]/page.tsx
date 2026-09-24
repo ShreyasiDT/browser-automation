@@ -1,4 +1,4 @@
-import { WorkflowShell } from "../../../../../features/workflows/components/workflow-shell";
+import { WorkflowShell } from "@/features/workflows/components/workflow-shell";
 
 export default async function WorkflowPage({
   params,

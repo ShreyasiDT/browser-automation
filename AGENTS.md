@@ -15,3 +15,9 @@ Derive database types from the Drizzle schema — never hand-write custom or par
 # Apostrophes in JSX text
 
 `react/no-unescaped-entities` (from `eslint-config-next/core-web-vitals`) errors on a raw `'` in JSX text, so `<p>It doesn't work</p>` fails `npm run lint`. In JSX text write the typographic apostrophe `’` directly (`<p>It doesn’t work</p>`) — it is not flagged, needs no entity, and reads correctly. Never reach for `&apos;`/`&#39;`, and don't reword copy to dodge the contraction. Straight `'` stays fine everywhere it isn't JSX text: string literals, attribute values, and expression containers.
+
+<!-- TRIGGER.DEV SKILLS START -->
+## Trigger.dev agent skills
+
+This project has Trigger.dev agent skills installed in `.claude/skills/`. Before writing or changing Trigger.dev code (background tasks, scheduled tasks, realtime, or chat.agent AI agents), load the most relevant skill: `trigger-authoring-chat-agent`, `trigger-authoring-tasks`, `trigger-chat-agent-advanced`, `trigger-cost-savings`, `trigger-getting-started`, `trigger-realtime-and-frontend`.
+<!-- TRIGGER.DEV SKILLS END -->
