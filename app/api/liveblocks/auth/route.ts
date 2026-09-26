@@ -16,13 +16,14 @@ export async function POST() {
     {
       userId,
       groupIds: orgId ? [orgId] : [],
+      organizationId: orgId,
     },
     {
       userInfo: {
         name: user?.fullName ?? user?.username ?? "Anonymous",
         avatar: user?.imageUrl,
       },
-    }
+    },
   );
 
   return new Response(body, { status });
