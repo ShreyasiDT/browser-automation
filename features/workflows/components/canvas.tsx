@@ -6,10 +6,12 @@ import {
   ReactFlow,
   ConnectionLineType,
   NodeTypes,
+  Panel,
   type ColorMode,
   type Edge,
   type Node,
 } from "@xyflow/react";
+import { AvatarStack } from "@liveblocks/react-ui";
 import { useLiveblocksFlow, Cursors } from "@liveblocks/react-flow";
 import { useTheme } from "next-themes";
 import * as React from "react";
@@ -89,6 +91,9 @@ export function Canvas({ workflowId }: CanvasProps) {
         <Background />
         <Controls />
         <Cursors />
+        <Panel position="top-right">
+          <AvatarStack />
+        </Panel>
       </ReactFlow>
     </div>
   );
