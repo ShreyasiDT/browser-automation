@@ -22,6 +22,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ResizablePanel } from "@/components/ui/resizable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 
 import {
@@ -32,6 +33,7 @@ import {
   type StepNodeKind,
   type StepNodeType,
 } from "@/features/workflows/nodes/node-registry";
+import { se } from "date-fns/locale";
 
 // This file builds up to the RightSidebar component exported at the bottom: a
 // header with workflow actions (delete, run), then two tabs — a Toolbar for
@@ -86,9 +88,10 @@ function Section({
 // Editor tab — edits the fields of the selected node.
 // ---------------------------------------------------------------------------
 
-// A single editor field for a node property.
+// A single editor field for a node property: a textarea when the field opts
+// into multiline, otherwise a single-line input.
 //the "URL" section present in "Editor" section to render node's data
-function FieldInput({
+function FieldControl({
   field,
   value,
   onChange,
@@ -97,9 +100,9 @@ function FieldInput({
   value: string;
   onChange: (value: string) => void;
 }) {
-  // TODO: support a multiline field variant (textarea).
+  const Control = field.multiline ? Textarea : Input;
   return (
-    <Input
+    <Control
       id={field.key}
       value={value}
       placeholder={field.placeholder}
@@ -133,8 +136,9 @@ function Inspector({ node }: { node: StepNodeType | undefined }) {
             <div key={field.key} className="flex flex-col gap-1.5">
               <Label htmlFor={field.key} className="text-xs">
                 {field.label}
+                {field.required && <span className="text-destructive">*</span>}
               </Label>
-              <FieldInput
+              <FieldControl
                 field={field}
                 value={values[field.key] ?? ""}
                 onChange={(value) => {
@@ -311,7 +315,11 @@ export function RightSidebar() {
     | undefined;
 
   // TODO: auto-switch to the Editor tab when the selection changes.
-
+  const [prevSelectedId, setPrevSelectedId] = useState(selected?.id);
+  if (selected && selected.id !== prevSelectedId) {
+    setPrevSelectedId(selected.id);
+    setTab("editor");
+  }
   return (
     <ResizablePanel
       className="bg-background"
