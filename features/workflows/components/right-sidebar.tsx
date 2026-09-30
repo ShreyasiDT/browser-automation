@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { MoreHorizontal, Play, Trash2 } from "lucide-react";
+import { useReactFlow, useStore } from "@xyflow/react";
+import { toast } from "sonner";
 
 import {
   Accordion,
@@ -164,9 +166,51 @@ const definitions = Object.values(nodeRegistry);
 // The Toolbar tab: a button per node type that adds it to the canvas.
 //accordions to show the triggers and actions
 function Palette() {
+  const { addNodes, getNodes, screenToFlowPosition } =
+    useReactFlow<StepNodeType>();
+  const domNode = useStore((s) => s.domNode);
+
   const add = (type: NodeType) => {
-    // TODO: add the clicked node to the canvas (one trigger max).
-    void type;
+    const def: NodeDefinition = nodeRegistry[type];
+    const nodes = getNodes();
+
+    if (
+      def.kind === "trigger" &&
+      nodes.some((node) => node.data.kind === "trigger")
+    ) {
+      toast.error("A workflow can only have one trigger");
+      return;
+    }
+
+    // Number repeats (Open URL 1, Open URL 2…) from the highest existing number,
+    // so deleting a node never produces a duplicate title.
+    let title = def.label;
+    if (def.kind !== "trigger") {
+      const prefix = `${def.label} `;
+      const highest = Math.max(
+        0,
+        ...nodes
+          .filter((node) => node.data.title.startsWith(prefix))
+          .map((node) => Number(node.data.title.slice(prefix.length)) || 0),
+      );
+      title = `${def.label} ${highest + 1}`;
+    }
+
+    // Drop the node in the middle of what the canvas currently shows.
+    const rect = domNode?.getBoundingClientRect();
+    const position = rect
+      ? screenToFlowPosition({
+          x: rect.left + rect.width / 2,
+          y: rect.top + rect.height / 2,
+        })
+      : { x: 0, y: 0 };
+
+    addNodes({
+      id: crypto.randomUUID(),
+      type: "step",
+      position,
+      data: { type, kind: def.kind, title, values: {} },
+    });
   };
 
   return (

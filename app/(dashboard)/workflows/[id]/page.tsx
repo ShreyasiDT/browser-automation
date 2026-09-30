@@ -4,6 +4,7 @@ import { auth } from "@clerk/nextjs/server";
 import { notFound } from "next/navigation";
 import { getWorkflow } from "@/features/workflows/data";
 import { liveblocks } from "@/lib/liveblocks";
+import { ReactFlowProvider } from "@xyflow/react";
 export default async function WorkflowPage({
   params,
 }: {
@@ -22,7 +23,10 @@ export default async function WorkflowPage({
   });
   return (
     <Room roomId={id}>
-      <WorkflowShell workflowId={id} />
+      {/* Shared React Flow store so the sidebar palette can add nodes to the canvas */}
+      <ReactFlowProvider>
+        <WorkflowShell workflowId={id} />
+      </ReactFlowProvider>
     </Room>
   );
 }
